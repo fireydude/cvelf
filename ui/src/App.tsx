@@ -34,14 +34,6 @@ function App() {
       description: 'Brian worked on two projects both of which related to Army training courses.',
     },
   ]);
-  const [educations, setEducations] = useState<Education[]>([
-    {
-      establishment: 'Best University',
-      qualification: 'Software Engineering BEng',
-      year: 2020,
-      areas: [ 'Programming', 'Mathematics', 'Software Architecture' ],
-    },
-  ]);
 
   const addSkill = (level: 'excellent' | 'good' | 'average', name: string) => {
     setSkills({
@@ -51,8 +43,8 @@ function App() {
   };
   const removeSkill = (level: 'excellent' | 'good' | 'average', name: string) => {
     setSkills({
-        ...keySkills,
-        [level]: [...keySkills[level].filter(x => x !== name)],
+      ...keySkills,
+      [level]: [...keySkills[level].filter(x => x !== name)],
     });
   };
   const addExperience = () => {
@@ -111,6 +103,41 @@ function App() {
     });
   };
 
+  const [educations, setEducations] = useState<Education[]>([
+    {
+      establishment: 'Best University',
+      qualification: 'Software Engineering BEng',
+      year: 2020,
+      areas: ['Programming', 'Mathematics', 'Software Architecture'],
+    },
+  ]);
+  const addEducation = () => {
+    if (educations) {
+      const defaultEd = {
+        establishment: '',
+        qualification: '',
+        year: new Date().getFullYear(),
+        areas: [ '1' ],
+      } as Education;
+      setEducations([...educations, defaultEd]);
+    }
+  };
+  const addEducationSubject = (i: number) => {
+    if (educations) {
+      const copy = [ ...educations ];
+      const update = copy[i];
+      update.areas.push(null);
+      setEducations(copy);
+    }
+  };
+  const removeEducationSubject = (i: number, val: string | null) => {
+    if (educations) {
+      const copy = [ ...educations ];
+      const update = copy[i];
+      update.areas = update.areas.filter(x => x !== val);
+      setEducations(copy);
+    }
+  };
   useEffect(() => {
     const cvData = window.localStorage.getItem('cv');
     if (cvData) {
@@ -207,7 +234,11 @@ function App() {
         updateExperience={updateExperience}
       />
       <EducationTraining
-        educations={educations} />
+        educations={educations}
+        addEducation={addEducation}
+        addSubject={addEducationSubject}
+        removeSubject={removeEducationSubject}
+         />
       <button onClick={handleReset}>Reset</button>
       <button onClick={handleSave}>Save</button>
       <button onClick={handleBackup}>Backup</button>

@@ -1,6 +1,6 @@
 export interface Education {
-  establishment: string;
-  qualification: string;
+  establishment?: string;
+  qualification?: string;
   year: number;
-  areas: string[];
+  areas: (string | null)[];
 }
