@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { SummaryEditor } from './components/summary/SummaryEditor';
-// import { CvContext, cv } from './CvContext';
 import { KeySkills } from './components/skills/KeySkills';
 import { WorkExperience } from './components/experience/WorkExperience';
 import { EducationTraining } from './components/education/EducationTraining';
@@ -9,9 +8,9 @@ import { Experience } from './model/Experience';
 import { Summary, SummaryItem } from './model/Summary';
 import { Skills } from './model/KeySkills';
 import { Education } from './model/Education';
+import { CV } from './model/CV';
 
 function App() {
-  // const [data, setData] = useState(cv.data);
   const [summary, setSummary] = useState<Summary>({
     items: [
       { name: 'Home Location', value: 'Lymm, Cheshire' },
@@ -117,27 +116,27 @@ function App() {
         establishment: 'establishment',
         qualification: 'qualification',
         year: new Date().getFullYear(),
-        areas: [ 'subject 1' ],
+        areas: ['subject 1'],
       } as Education;
       setEducations([...educations, defaultEd]);
     }
   };
   const removeEducation = (i: number) => {
     if (educations) {
-      const copy = [ ...educations.filter(x => x !== educations[i]) ];
+      const copy = [...educations.filter(x => x !== educations[i])];
       setEducations(copy);
     }
   };
   const updateEducation = (val: Education, i: number) => {
     if (educations) {
-      const copy = [ ...educations ];
+      const copy = [...educations];
       copy[i] = val;
       setEducations(copy);
     }
   };
   const addEducationSubject = (i: number) => {
     if (educations) {
-      const copy = [ ...educations ];
+      const copy = [...educations];
       const update = copy[i];
       update.areas.push(null);
       setEducations(copy);
@@ -145,7 +144,7 @@ function App() {
   };
   const removeEducationSubject = (i: number, val: string | null) => {
     if (educations) {
-      const copy = [ ...educations ];
+      const copy = [...educations];
       const update = copy[i];
       update.areas = update.areas.filter(x => x !== val);
       setEducations(copy);
@@ -159,35 +158,34 @@ function App() {
   }, []);
 
   function handleSave() {
-    // window.localStorage.setItem('cv', JSON.stringify(data));
+    window.localStorage.setItem('cv', JSON.stringify({
+      summary,
+      keySkills,
+      experiences,
+      educations,
+    } as CV));
   }
 
   function setCvJsonData(cvData: string) {
-    // setData((cv: CV) => {
-    //   const saved = JSON.parse(cvData) as CV;
-    //   let d = { ...cv } as CV;
-    //   if (saved?.summary) {
-    //     d.summary = saved.summary;
-    //   }
-    //   if (saved?.keySkills) {
-    //     d.keySkills = saved.keySkills;
-    //   }
-    //   if (saved?.experiences) {
-    //     d.experiences = [];
-    //     for (const e of saved.experiences) {
-    //       d.experiences.push({
-    //         ...e,
-    //         startDate: new Date(e.startDate),
-    //         endDate: new Date(e.endDate),
-    //       });
-    //     }
-    //     setExperiences(d.experiences);
-    //   }
-    //   if (saved?.educations) {
-    //     d.educations = saved.educations;
-    //   }
-    //   return d;
-    // });
+    const saved = JSON.parse(cvData) as CV;
+    if (saved?.summary) {
+      setSummary(saved.summary);
+    }
+    if (saved?.keySkills) {
+      setSkills(saved.keySkills);
+    }
+    if (saved?.experiences) {
+      const experiences = saved.experiences.map((e, i) => ({
+        ...e,
+        startDate: new Date(e.startDate),
+        endDate: new Date(e.endDate),
+      }));
+      setExperiences(experiences);
+    }
+
+    if (saved?.educations) {
+      setEducations(saved.educations);
+    }
   }
 
   function handleReset() {
@@ -253,7 +251,7 @@ function App() {
         updateEducation={updateEducation}
         addSubject={addEducationSubject}
         removeSubject={removeEducationSubject}
-         />
+      />
       <button onClick={handleReset}>Reset</button>
       <button onClick={handleSave}>Save</button>
       <button onClick={handleBackup}>Backup</button>
