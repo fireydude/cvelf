@@ -2,6 +2,7 @@ import { useState } from "react";
 import React from "react";
 import { AddItem } from "../shared/AddItem";
 import { Summary, SummaryItem } from "../../model/Summary";
+import { FocusText } from "../shared/FocusText";
 
 interface ISummaryEditor {
   summary: Summary;
@@ -30,7 +31,7 @@ export const SummaryEditor: React.FC<ISummaryEditor> = (props) => {
                 <input type='text' value={item.value} style={{ width: 300 }}
                   onChange={(e) => updateItem(item, e.currentTarget.value)}
                 />
-               <button onClick={() => deleteItem(item.name)}>Delete</button>
+                <button onClick={() => deleteItem(item.name)}>Delete</button>
               </dd>
             </React.Fragment>
           );
@@ -40,16 +41,14 @@ export const SummaryEditor: React.FC<ISummaryEditor> = (props) => {
       <br />
       {!updateText &&
         <div onClick={() => setUpdateText(true)} style={{ fontSize: 20, margin: 30 }}>
-      {summary.summary}
+          {summary.summary}
         </div>
       }
       {updateText &&
-        <>
-          <textarea rows={3} cols={100} value={summary.summary}
-            onChange={(e) => updateSummaryText(e.currentTarget.value)}
-            onBlur={() => setUpdateText(false)}
-          />
-        </>}
+        <FocusText val={summary.summary} textArea hasFocus={updateText}
+          onChange={(val) => updateSummaryText(val)}
+          onBlur={() => setUpdateText(false)} placeholder="summary description" />
+      }
       <hr />
     </article>
   );

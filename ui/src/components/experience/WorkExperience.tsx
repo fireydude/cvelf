@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FocusText } from "./FocusText";
+import { FocusText } from "../shared/FocusText";
 import { Experience } from "../../model/Experience";
 
 interface IWorkExperience {
