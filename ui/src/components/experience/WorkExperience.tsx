@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
-import { CvContext, Experience } from "../../CvContext";
+import React, { useState } from "react";
 import { FocusText } from "./FocusText";
+import { Experience } from "../../model/Experience";
 
 interface IWorkExperience {
   experiences: Experience[];
@@ -10,11 +10,11 @@ interface IWorkExperience {
 
 export const WorkExperience: React.FC<IWorkExperience> = (props) => {
   const { experiences, addExperience, updateExperience } = props;
+  
   const [updateTitle, setUpdateTitle] = useState<number>();
   const [updateOrg, setUpdateOrg] = useState<number>();
   const [updateLocation, setUpdateLocation] = useState<number>();
   const [updateDesc, setUpdateDesc] = useState<number>();
-  // var cvContext = useContext(CvContext);
 
   return (<article>
     <h2>Employment History</h2>

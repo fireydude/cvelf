@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { SummaryEditor } from './components/summary/SummaryEditor';
-import { CV, CvContext, Experience, ISummaryItem, cv } from './CvContext';
+import { CvContext, cv } from './CvContext';
 import { KeySkills } from './components/skills/KeySkills';
 import { WorkExperience } from './components/experience/WorkExperience';
 import { EducationTraining } from './components/education/EducationTraining';
+import { Experience } from './model/Experience';
+import { SummaryItem } from './model/Summary';
+import { CV } from './model/CV';
 
 function App() {
   const [data, setData] = useState(cv.data);
@@ -79,7 +82,7 @@ function App() {
       },
     });
   };
-  cv.updateItem = (item: ISummaryItem, val: string) => {
+  cv.updateItem = (item: SummaryItem, val: string) => {
     setData({
       ...data,
       summary: {
@@ -183,14 +186,23 @@ function App() {
     <div className="Container">
       <CvContext.Provider value={{ ...cv, data }}>
         <h1>Brian Herbert</h1>
-        <SummaryEditor />
-        <KeySkills />
+        <SummaryEditor 
+          summary={cv.data.summary} 
+          updateSummaryText={cv.updateSummaryText}
+          updateItem={cv.updateItem}
+          deleteItem={cv.deleteItem}
+          addItem={cv.addItem} />
+        <KeySkills 
+          keySkills={cv.data.keySkills}
+          addSkill={cv.addSkill}
+          removeSkill={cv.removeSkill} />
         <WorkExperience
           experiences={experiences}
           addExperience={cv.addExperience}
           updateExperience={cv.updateExperience}
         />
-        <EducationTraining />
+        <EducationTraining 
+          educations={cv.data.educations} />
       </CvContext.Provider>
       <button onClick={handleReset}>Reset</button>
       <button onClick={handleSave}>Save</button>

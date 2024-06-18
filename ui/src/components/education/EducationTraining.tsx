@@ -1,9 +1,12 @@
-import { useContext } from "react";
-import { CvContext } from "../../CvContext";
+import { Education } from "../../model/Education";
 
-export const EducationTraining: React.FC = () => {
-  var cvContext = useContext(CvContext);
-  var educations = cvContext.data.educations;
+interface IEducationTraining {
+  educations: Education[];
+}
+
+export const EducationTraining: React.FC<IEducationTraining> = (props) => {
+  const { educations } = props;
+  
   return (<article>
     <h2>Education and Training</h2>
     {educations && educations.map((e, i) => (<section key={i}>

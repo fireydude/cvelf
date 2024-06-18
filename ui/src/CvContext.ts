@@ -1,43 +1,7 @@
 import { createContext } from "react";
-
-export interface ISummaryItem {
-  name: string;
-  value: string;
-}
-
-export interface CV {
-  summary: Summary;
-  keySkills: KeySkills;
-  experiences: Experience[];
-  educations: Education[];
-}
-
-export interface Summary {
-  items: ISummaryItem[];
-  summary: string;
-}
-
-export interface KeySkills {
-  excellent: string[];
-  average: string[];
-  good: string[];
-}
-
-export interface Experience {
-  title?: string;
-  organisation?: string;
-  location?: string;
-  startDate: Date;
-  endDate: Date;
-  description?: string;
-}
-
-export interface Education {
-  establishment: string;
-  qualification: string;
-  year: number;
-  areas: string[];
-}
+import { CV } from "./model/CV";
+import { Experience } from "./model/Experience";
+import { SummaryItem } from "./model/Summary";
 
 export interface CvState {
   data: CV;
@@ -47,7 +11,7 @@ export interface CvState {
   updateExperience: (item: Experience, index: number) => void;
   addItem: (name: string) => void;
   deleteItem: (name: string) => void;
-  updateItem: (item: ISummaryItem, val: string) => void;
+  updateItem: (item: SummaryItem, val: string) => void;
   updateSummaryText: (val: string) => void;
 }
 

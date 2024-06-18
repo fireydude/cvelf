@@ -1,10 +1,15 @@
-import { useContext } from "react";
-import { CvContext } from "../../CvContext";
 import React from "react";
 import { AddItem } from "../shared/AddItem";
+import { Skills } from "../../model/KeySkills";
 
-export const KeySkills: React.FC = () => {
-  var cvContext = useContext(CvContext);
+interface IKeySkills {
+  keySkills: Skills;
+  removeSkill: (level: 'excellent' | 'good' | 'average', skill: string) => void;
+  addSkill: (level: 'excellent' | 'good' | 'average', skill: string) => void;
+}
+
+export const KeySkills: React.FC<IKeySkills> = (props) => {
+  const { keySkills, removeSkill, addSkill } = props;
 
   return (
     <article>
@@ -23,24 +28,24 @@ export const KeySkills: React.FC = () => {
       }}>
         <div style={{ gridArea: 'excellent' }}>
           <h3>Excellent</h3>
-          {cvContext.data.keySkills.excellent.map((skill, index) => {
-            return (<p key={index}>{skill}<button onClick={() => cvContext.removeSkill('excellent', skill)}>Delete</button></p>);
+          {keySkills.excellent.map((skill, index) => {
+            return (<p key={index}>{skill}<button onClick={() => removeSkill('excellent', skill)}>Delete</button></p>);
           })}
-          <AddItem addText="Add Excellent Skill" add={(name) => cvContext.addSkill('excellent', name)} />
+          <AddItem addText="Add Excellent Skill" add={(name) => addSkill('excellent', name)} />
         </div>
         <div style={{ gridArea: 'good' }}>
           <h3>Good</h3>
-          {cvContext.data.keySkills.good.map((skill, index) => {
-            return (<p key={index}>{skill}<button onClick={() => cvContext.removeSkill('good', skill)}>Delete</button></p>);
+          {keySkills.good.map((skill, index) => {
+            return (<p key={index}>{skill}<button onClick={() => removeSkill('good', skill)}>Delete</button></p>);
           })}
-          <AddItem addText="Add Good Skill" add={(name) => cvContext.addSkill('good', name)} />
+          <AddItem addText="Add Good Skill" add={(name) => addSkill('good', name)} />
         </div>
         <div style={{ gridArea: 'average' }}>
           <h3>Average</h3>
-          {cvContext.data.keySkills.average.map((skill, index) => {
-            return (<p key={index}>{skill}<button onClick={() => cvContext.removeSkill('average', skill)}>Delete</button></p>);
+          {keySkills.average.map((skill, index) => {
+            return (<p key={index}>{skill}<button onClick={() => removeSkill('average', skill)}>Delete</button></p>);
           })}
-          <AddItem addText="Add Average Skill" add={(name) => cvContext.addSkill('average', name)} />
+          <AddItem addText="Add Average Skill" add={(name) => addSkill('average', name)} />
         </div>
       </div>
       <hr />
