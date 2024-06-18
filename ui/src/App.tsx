@@ -1,16 +1,29 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { SummaryEditor } from './components/summary/SummaryEditor';
-import { CvContext, cv } from './CvContext';
+// import { CvContext, cv } from './CvContext';
 import { KeySkills } from './components/skills/KeySkills';
 import { WorkExperience } from './components/experience/WorkExperience';
 import { EducationTraining } from './components/education/EducationTraining';
 import { Experience } from './model/Experience';
-import { SummaryItem } from './model/Summary';
-import { CV } from './model/CV';
+import { Summary, SummaryItem } from './model/Summary';
+import { Skills } from './model/KeySkills';
+import { Education } from './model/Education';
 
 function App() {
-  const [data, setData] = useState(cv.data);
+  // const [data, setData] = useState(cv.data);
+  const [summary, setSummary] = useState<Summary>({
+    items: [
+      { name: 'Home Location', value: 'Lymm, Cheshire' },
+      { name: 'Telephone (mobile)', value: '+44 7780602687' },
+    ],
+    summary: 'experienced developer',
+  });
+  const [keySkills, setSkills] = useState<Skills>({
+    excellent: ['Outlook'],
+    good: ['Windows'],
+    average: ['Communication', 'Time keeping'],
+  });
   const [experiences, setExperiences] = useState<Experience[]>([
     {
       title: 'MOD Army Digital Service Contract',
@@ -21,26 +34,28 @@ function App() {
       description: 'Brian worked on two projects both of which related to Army training courses.',
     },
   ]);
+  const [educations, setEducations] = useState<Education[]>([
+    {
+      establishment: 'Best University',
+      qualification: 'Software Engineering BEng',
+      year: 2020,
+      areas: [ 'Programming', 'Mathematics', 'Software Architecture' ],
+    },
+  ]);
 
-  cv.addSkill = (level: 'excellent' | 'good' | 'average', name: string) => {
-    setData({
-      ...data,
-      keySkills: {
-        ...data.keySkills,
-        [level]: [...data.keySkills[level], name],
-      },
+  const addSkill = (level: 'excellent' | 'good' | 'average', name: string) => {
+    setSkills({
+      ...keySkills,
+      [level]: [...keySkills[level], name],
     });
   };
-  cv.removeSkill = (level: 'excellent' | 'good' | 'average', name: string) => {
-    setData({
-      ...data,
-      keySkills: {
-        ...data.keySkills,
-        [level]: [...data.keySkills[level].filter(x => x !== name)],
-      },
+  const removeSkill = (level: 'excellent' | 'good' | 'average', name: string) => {
+    setSkills({
+        ...keySkills,
+        [level]: [...keySkills[level].filter(x => x !== name)],
     });
   };
-  cv.addExperience = () => {
+  const addExperience = () => {
     if (!experiences) {
       return;
     }
@@ -52,7 +67,7 @@ function App() {
       },
     ]);
   };
-  cv.updateExperience = (item: Experience, index: number) => {
+  const updateExperience = (item: Experience, index: number) => {
     if (!experiences) {
       return;
     }
@@ -61,47 +76,38 @@ function App() {
     setExperiences(e);
   };
 
-  cv.addItem = (name: string) => {
-    if (data.summary.items.find(x => x.name === name)) {
+  const addItem = (name: string) => {
+    if (summary.items.find(x => x.name === name)) {
       return;
     }
-    setData({
-      ...data,
-      summary: {
-        ...data.summary,
-        items: [...data.summary.items, { name, value: '' }],
-      },
+    setSummary({
+      ...summary,
+      items: [...summary.items, { name, value: '' }],
     });
   };
-  cv.deleteItem = (name: string) => {
-    setData({
-      ...data,
-      summary: {
-        ...data.summary,
-        items: data.summary.items.filter(x => x.name !== name),
-      },
+  const deleteItem = (name: string) => {
+    setSummary({
+      ...summary,
+      items: summary.items.filter(x => x.name !== name),
     });
   };
-  cv.updateItem = (item: SummaryItem, val: string) => {
-    setData({
-      ...data,
-      summary: {
-        ...data.summary,
-        items: data.summary.items.map((i) => {
-          if (i.name === item.name) {
-            return { ...item, value: val };
-          }
-          else {
-            return i;
-          }
-        }),
-      },
+  const updateItem = (item: SummaryItem, val: string) => {
+    setSummary({
+      ...summary,
+      items: summary.items.map((i) => {
+        if (i.name === item.name) {
+          return { ...item, value: val };
+        }
+        else {
+          return i;
+        }
+      }),
     });
   };
-  cv.updateSummaryText = (val: string) => {
-    setData({
-      ...data,
-      summary: { ...data.summary, summary: val },
+  const updateSummaryText = (val: string) => {
+    setSummary({
+      ...summary,
+      summary: val,
     });
   };
 
@@ -113,35 +119,35 @@ function App() {
   }, []);
 
   function handleSave() {
-    window.localStorage.setItem('cv', JSON.stringify(data));
+    // window.localStorage.setItem('cv', JSON.stringify(data));
   }
 
   function setCvJsonData(cvData: string) {
-    setData((cv: CV) => {
-      const saved = JSON.parse(cvData) as CV;
-      let d = { ...cv } as CV;
-      if (saved?.summary) {
-        d.summary = saved.summary;
-      }
-      if (saved?.keySkills) {
-        d.keySkills = saved.keySkills;
-      }
-      if (saved?.experiences) {
-        d.experiences = [];
-        for (const e of saved.experiences) {
-          d.experiences.push({
-            ...e,
-            startDate: new Date(e.startDate),
-            endDate: new Date(e.endDate),
-          });
-        }
-        setExperiences(d.experiences);
-      }
-      if (saved?.educations) {
-        d.educations = saved.educations;
-      }
-      return d;
-    });
+    // setData((cv: CV) => {
+    //   const saved = JSON.parse(cvData) as CV;
+    //   let d = { ...cv } as CV;
+    //   if (saved?.summary) {
+    //     d.summary = saved.summary;
+    //   }
+    //   if (saved?.keySkills) {
+    //     d.keySkills = saved.keySkills;
+    //   }
+    //   if (saved?.experiences) {
+    //     d.experiences = [];
+    //     for (const e of saved.experiences) {
+    //       d.experiences.push({
+    //         ...e,
+    //         startDate: new Date(e.startDate),
+    //         endDate: new Date(e.endDate),
+    //       });
+    //     }
+    //     setExperiences(d.experiences);
+    //   }
+    //   if (saved?.educations) {
+    //     d.educations = saved.educations;
+    //   }
+    //   return d;
+    // });
   }
 
   function handleReset() {
@@ -184,26 +190,24 @@ function App() {
 
   return (
     <div className="Container">
-      <CvContext.Provider value={{ ...cv, data }}>
-        <h1>Brian Herbert</h1>
-        <SummaryEditor 
-          summary={cv.data.summary} 
-          updateSummaryText={cv.updateSummaryText}
-          updateItem={cv.updateItem}
-          deleteItem={cv.deleteItem}
-          addItem={cv.addItem} />
-        <KeySkills 
-          keySkills={cv.data.keySkills}
-          addSkill={cv.addSkill}
-          removeSkill={cv.removeSkill} />
-        <WorkExperience
-          experiences={experiences}
-          addExperience={cv.addExperience}
-          updateExperience={cv.updateExperience}
-        />
-        <EducationTraining 
-          educations={cv.data.educations} />
-      </CvContext.Provider>
+      <h1>Brian Herbert</h1>
+      <SummaryEditor
+        summary={summary}
+        updateSummaryText={updateSummaryText}
+        updateItem={updateItem}
+        deleteItem={deleteItem}
+        addItem={addItem} />
+      <KeySkills
+        keySkills={keySkills}
+        addSkill={addSkill}
+        removeSkill={removeSkill} />
+      <WorkExperience
+        experiences={experiences}
+        addExperience={addExperience}
+        updateExperience={updateExperience}
+      />
+      <EducationTraining
+        educations={educations} />
       <button onClick={handleReset}>Reset</button>
       <button onClick={handleSave}>Save</button>
       <button onClick={handleBackup}>Backup</button>
