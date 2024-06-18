@@ -3,6 +3,8 @@ import React from "react";
 import { AddItem } from "../shared/AddItem";
 import { Summary, SummaryItem } from "../../model/Summary";
 import { FocusText } from "../shared/FocusText";
+import { CvSection } from "../shared/CvSection";
+import { CvArticle } from "../shared/CvArticle";
 
 interface ISummaryEditor {
   summary: Summary;
@@ -18,38 +20,39 @@ export const SummaryEditor: React.FC<ISummaryEditor> = (props) => {
   const [updateText, setUpdateText] = useState<boolean>(false);
 
   return (
-    <article>
+    <CvArticle>
       <h2>Summary</h2>
-      <dl>
-        {summary.items.map((item, index) => {
-          return (
-            <React.Fragment key={index}>
-              <dt>
-                {item.name}
-              </dt>
-              <dd>
-                <input type='text' value={item.value} style={{ width: 300 }}
-                  onChange={(e) => updateItem(item, e.currentTarget.value)}
-                />
-                <button onClick={() => deleteItem(item.name)}>Delete</button>
-              </dd>
-            </React.Fragment>
-          );
-        })}
-      </dl>
-      <AddItem addText="Add Summary Row" add={addItem} />
-      <br />
-      {!updateText &&
-        <div onClick={() => setUpdateText(true)} style={{ fontSize: 20, margin: 30 }}>
-          {summary.summary}
-        </div>
-      }
-      {updateText &&
-        <FocusText val={summary.summary} textArea hasFocus={updateText}
-          onChange={(val) => updateSummaryText(val)}
-          onBlur={() => setUpdateText(false)} placeholder="summary description" />
-      }
-      <hr />
-    </article>
+      <CvSection>
+        <dl>
+          {summary.items.map((item, index) => {
+            return (
+              <React.Fragment key={index}>
+                <dt>
+                  {item.name}
+                </dt>
+                <dd>
+                  <input type='text' value={item.value} style={{ width: 300 }}
+                    onChange={(e) => updateItem(item, e.currentTarget.value)}
+                  />
+                  <button onClick={() => deleteItem(item.name)}>Delete</button>
+                </dd>
+              </React.Fragment>
+            );
+          })}
+        </dl>
+        <AddItem addText="Add Summary Row" add={addItem} />
+        <br />
+        {!updateText &&
+          <div onClick={() => setUpdateText(true)} style={{ fontSize: 20, margin: 30 }}>
+            {summary.summary}
+          </div>
+        }
+        {updateText &&
+          <FocusText val={summary.summary} textArea hasFocus={updateText}
+            onChange={(val) => updateSummaryText(val)}
+            onBlur={() => setUpdateText(false)} placeholder="summary description" />
+        }
+      </CvSection>
+    </CvArticle>
   );
 };

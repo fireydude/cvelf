@@ -1,6 +1,8 @@
 import React from "react";
 import { AddItem } from "../shared/AddItem";
 import { Skills } from "../../model/KeySkills";
+import { CvSection } from "../shared/CvSection";
+import { CvArticle } from "../shared/CvArticle";
 
 interface IKeySkills {
   keySkills: Skills;
@@ -12,19 +14,13 @@ export const KeySkills: React.FC<IKeySkills> = (props) => {
   const { keySkills, removeSkill, addSkill } = props;
 
   return (
-    <article>
+    <CvArticle>
       <h2>Key Skills</h2>
-      <div style={{
+      <CvSection style={{
         display: 'grid',
         gridTemplateAreas: `'excellent good average'`,
         gap: 5,
         gridTemplateColumns: '33% 33% 33%',
-        border: 'solid 1px',
-        borderRadius: 5,
-        backgroundColor: '#eee',
-        margin: 'auto',
-        width: '1000px',
-        padding: 20,
       }}>
         <div style={{ gridArea: 'excellent' }}>
           <h3>Excellent</h3>
@@ -47,8 +43,7 @@ export const KeySkills: React.FC<IKeySkills> = (props) => {
           })}
           <AddItem addText="Add Average Skill" add={(name) => addSkill('average', name)} />
         </div>
-      </div>
-      <hr />
-    </article>
+      </CvSection>
+    </CvArticle>
   );
 };

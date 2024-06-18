@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { FocusText } from "../shared/FocusText";
 import { Experience } from "../../model/Experience";
+import { CvSection } from "../shared/CvSection";
+import { CvArticle } from "../shared/CvArticle";
 
 interface IWorkExperience {
   experiences: Experience[];
@@ -16,23 +18,16 @@ export const WorkExperience: React.FC<IWorkExperience> = (props) => {
   const [updateLocation, setUpdateLocation] = useState<number>();
   const [updateDesc, setUpdateDesc] = useState<number>();
 
-  return (<article>
+  return (<CvArticle>
     <h2>Employment History</h2>
     {experiences && experiences.map((val, index) => (
-      <section key={index} style={{
+      <CvSection key={index} style={{
         display: 'grid',
         gridTemplateAreas: `'title title title'
         'organisation location date'
         'desc desc desc`,
         alignContent: 'left',
         gap: 5,
-        border: 'solid 1px',
-        borderRadius: 5,
-        backgroundColor: '#eee',
-        margin: 'auto',
-        width: '1000px',
-        padding: 20,
-        marginTop: 20,
       }}>
         <h3
           style={{ gridArea: 'title', textAlign: 'left', color: val.title ? undefined : '#888' }}
@@ -88,13 +83,12 @@ export const WorkExperience: React.FC<IWorkExperience> = (props) => {
             onChange={(v: string) => updateExperience({ ...val, description: v }, index)}
             onBlur={() => setUpdateDesc(undefined)} />
         </div>
-      </section>
+      </CvSection>
     ))}
     <div style={{ marginTop: 50, marginLeft: 20 }}>
       <button onClick={() => addExperience()}>
         Add Experience
       </button>
     </div>
-    <hr />
-  </article>);
+  </CvArticle>);
 };

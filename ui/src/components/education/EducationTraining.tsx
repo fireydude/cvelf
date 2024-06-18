@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Education } from "../../model/Education";
 import { FocusText } from "../shared/FocusText";
+import { CvSection } from "../shared/CvSection";
+import { CvArticle } from "../shared/CvArticle";
 
 interface IEducationTraining {
   educations: Education[];
@@ -24,9 +26,10 @@ export const EducationTraining: React.FC<IEducationTraining> = (props) => {
     updateEducation(education, educationIndex);
   };
 
-  return (<article>
+  return (<CvArticle>
     <h2>Education and Training</h2>
-    {educations && educations.map((e, i) => (<section key={i}>
+    {educations && educations.map((e, i) => (<CvSection key={i}>
+      <button style={{ float: 'right' }} onClick={() => removeEducation(i)}>Delete</button>
       <h3 onClick={() => updateEstablishment === undefined && setUpdateEstablishment(i)}>
         <FocusText
           val={e.establishment}
@@ -34,7 +37,6 @@ export const EducationTraining: React.FC<IEducationTraining> = (props) => {
           hasFocus={updateEstablishment === i}
           onChange={(v: string) => updateEducation({ ...e, establishment: v }, i)}
           onBlur={() => setUpdateEstablishment(undefined)} />
-        <button onClick={() => removeEducation(i)}>Delete</button>
       </h3>
       <span style={{ fontWeight: 'bold' }} onClick={() => updateQualification === undefined && setUpdateQualification(i)}>
         <FocusText
@@ -66,11 +68,11 @@ export const EducationTraining: React.FC<IEducationTraining> = (props) => {
         ))}
       </ul>
       <button onClick={() => addSubject(i)}>Add Subject Area</button>
-    </section>))}
+    </CvSection>))}
     <div style={{ marginTop: 50, marginLeft: 20 }}>
       <button onClick={() => addEducation()}>
         Add Experience
       </button>
     </div>
-  </article>);
+  </CvArticle>);
 };
