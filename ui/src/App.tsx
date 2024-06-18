@@ -8,6 +8,16 @@ import { EducationTraining } from './components/education/EducationTraining';
 
 function App() {
   const [data, setData] = useState(cv.data);
+  const [experiences, setExperiences] = useState<Experience[]>([
+    {
+      title: 'MOD Army Digital Service Contract',
+      organisation: 'Monitor IS Enterprise Technologists',
+      location: 'Andover (remote)',
+      startDate: new Date(2021, 5, 1),
+      endDate: new Date(2024, 4, 1),
+      description: 'Brian worked on two projects both of which related to Army training courses.',
+    },
+  ]);
 
   cv.addSkill = (level: 'excellent' | 'good' | 'average', name: string) => {
     setData({
@@ -28,24 +38,24 @@ function App() {
     });
   };
   cv.addExperience = () => {
-    setData({
-      ...data,
-      experiences: [
-        ...data.experiences,
-        {
-          startDate: new Date(),
-          endDate: new Date(),
-        },
-      ],
-    });
+    if (!experiences) {
+      return;
+    }
+    setExperiences([
+      ...experiences,
+      {
+        startDate: new Date(),
+        endDate: new Date(),
+      },
+    ]);
   };
   cv.updateExperience = (item: Experience, index: number) => {
-    let experiences = [ ...data.experiences ];
-    experiences[index] = item;
-    setData({
-      ...data,
-      experiences,
-    });
+    if (!experiences) {
+      return;
+    }
+    const e = [...experiences];
+    e[index] = item;
+    setExperiences(e);
   };
 
   cv.addItem = (name: string) => {
@@ -122,6 +132,7 @@ function App() {
             endDate: new Date(e.endDate),
           });
         }
+        setExperiences(d.experiences);
       }
       if (saved?.educations) {
         d.educations = saved.educations;
@@ -174,7 +185,11 @@ function App() {
         <h1>Brian Herbert</h1>
         <SummaryEditor />
         <KeySkills />
-        <WorkExperience />
+        <WorkExperience
+          experiences={experiences}
+          addExperience={cv.addExperience}
+          updateExperience={cv.updateExperience}
+        />
         <EducationTraining />
       </CvContext.Provider>
       <button onClick={handleReset}>Reset</button>

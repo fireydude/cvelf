@@ -1,14 +1,20 @@
 import React, { useContext, useState } from "react";
-import { CvContext } from "../../CvContext";
+import { CvContext, Experience } from "../../CvContext";
 import { FocusText } from "./FocusText";
 
-export const WorkExperience: React.FC = () => {
+interface IWorkExperience {
+  experiences: Experience[];
+  addExperience: () => void;
+  updateExperience: (val: Experience, index: number) => void;
+}
+
+export const WorkExperience: React.FC<IWorkExperience> = (props) => {
+  const { experiences, addExperience, updateExperience } = props;
   const [updateTitle, setUpdateTitle] = useState<number>();
   const [updateOrg, setUpdateOrg] = useState<number>();
   const [updateLocation, setUpdateLocation] = useState<number>();
   const [updateDesc, setUpdateDesc] = useState<number>();
-  var cvContext = useContext(CvContext);
-  var experiences = cvContext.data.experiences;
+  // var cvContext = useContext(CvContext);
 
   return (<article>
     <h2>Employment History</h2>
@@ -36,21 +42,21 @@ export const WorkExperience: React.FC = () => {
             val={val.title}
             placeholder='title'
             hasFocus={updateTitle === index}
-            onChange={(v: string) => cvContext.updateExperience({ ...val, title: v }, index)}
+            onChange={(v: string) => updateExperience({ ...val, title: v }, index)}
             onBlur={() => setUpdateTitle(undefined)} />
         </h3>
         <div style={{ gridArea: 'organisation', fontWeight: 'bold', textAlign: 'left' }} onClick={() => updateOrg === undefined && setUpdateOrg(index)}>
           <FocusText val={val.organisation} 
             placeholder='organisation'
             hasFocus={updateOrg === index}
-            onChange={(v: string) => cvContext.updateExperience({ ...val, organisation: v }, index)}
+            onChange={(v: string) => updateExperience({ ...val, organisation: v }, index)}
             onBlur={() => setUpdateOrg(undefined)} />
         </div>
         <div style={{ gridArea: 'location', textAlign: 'left' }} onClick={() => updateLocation === undefined && setUpdateLocation(index)}>
           <FocusText val={val.location} 
             placeholder='location'
             hasFocus={updateLocation === index}
-            onChange={(v: string) => cvContext.updateExperience({ ...val, location: v }, index)}
+            onChange={(v: string) => updateExperience({ ...val, location: v }, index)}
             onBlur={() => setUpdateLocation(undefined)} />
         </div>
         <div style={{ gridArea: 'date', textAlign: 'left' }}>
@@ -60,7 +66,7 @@ export const WorkExperience: React.FC = () => {
             onChange={(e) => {
               const d: Date = e.currentTarget?.valueAsDate ?? new Date();
               if (d) {
-                cvContext.updateExperience({ ...val, startDate: d }, index);
+                updateExperience({ ...val, startDate: d }, index);
               }
             }}
           />
@@ -70,7 +76,7 @@ export const WorkExperience: React.FC = () => {
             onChange={(e) => {
               const d: Date = e.currentTarget?.valueAsDate ?? new Date();
               if (d) {
-                cvContext.updateExperience({ ...val, endDate: d }, index);
+                updateExperience({ ...val, endDate: d }, index);
               }
             }}
           />
@@ -79,13 +85,13 @@ export const WorkExperience: React.FC = () => {
           <FocusText val={val.description}
             placeholder="description"
             hasFocus={updateDesc === index}
-            onChange={(v: string) => cvContext.updateExperience({ ...val, description: v }, index)}
+            onChange={(v: string) => updateExperience({ ...val, description: v }, index)}
             onBlur={() => setUpdateDesc(undefined)} />
         </div>
       </section>
     ))}
     <div style={{ marginTop: 50, marginLeft: 20 }}>
-      <button onClick={() => cvContext.addExperience()}>
+      <button onClick={() => addExperience()}>
         Add Experience
       </button>
     </div>
