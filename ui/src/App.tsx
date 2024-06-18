@@ -9,6 +9,7 @@ import { Summary, SummaryItem } from './model/Summary';
 import { Skills } from './model/KeySkills';
 import { Education } from './model/Education';
 import { CV } from './model/CV';
+import { PersistToolbar } from './components/persist-menu/PersistToolbar';
 
 function App() {
   const [summary, setSummary] = useState<Summary>({
@@ -166,7 +167,7 @@ function App() {
     } as CV));
   }
 
-  function setCvJsonData(cvData: string) {
+  const setCvJsonData = (cvData: string) => {
     const saved = JSON.parse(cvData) as CV;
     if (saved?.summary) {
       setSummary(saved.summary);
@@ -186,47 +187,9 @@ function App() {
     if (saved?.educations) {
       setEducations(saved.educations);
     }
-  }
+  };
 
-  function handleReset() {
-    const cvData = window.localStorage.getItem('cv');
-    if (cvData) {
-      setCvJsonData(cvData);
-    }
-  }
-  function handleBackup() {
-    const cvData = window.localStorage.getItem('cv');
-    if (!cvData) {
-      return;
-    }
-
-    const link = document.createElement("a");
-    const file = new Blob([cvData], { type: 'text/plain' });
-    link.href = URL.createObjectURL(file);
-    link.download = "backup.json";
-    link.click();
-    URL.revokeObjectURL(link.href);
-  }
-  function handleRestore() {
-    const fileInput = document.getElementById('restore');
-    console.log('start');
-    if (fileInput) {
-      console.log(fileInput);
-      const files = (fileInput as any).files;
-      if (files?.length === 1) {
-        const reader = new FileReader();
-        reader.onload = fileLoadedEvent => {
-          const json = fileLoadedEvent?.target?.result as string;
-          window.localStorage.setItem('cv', json);
-          setCvJsonData(json);
-        };
-        reader.onerror = error => console.error(error);
-        reader.readAsText(files[0]); // you could also read images and other binaries
-      }
-    }
-  }
-
-  return (
+  return (<>
     <div className="Container">
       <h1>Brian Herbert</h1>
       <SummaryEditor
@@ -252,12 +215,9 @@ function App() {
         addSubject={addEducationSubject}
         removeSubject={removeEducationSubject}
       />
-      <button onClick={handleReset}>Reset</button>
-      <button onClick={handleSave}>Save</button>
-      <button onClick={handleBackup}>Backup</button>
-      <label htmlFor="restore" style={{ border: 'solid 1px', borderRadius: 2, background: "#eee", padding: 2, fontSize: 13 }}>Restore</label>
-      <input id='restore' style={{ visibility: "hidden" }} type={"file"} onChange={handleRestore} />
     </div>
+    <PersistToolbar setCvJsonData={setCvJsonData} handleSave={handleSave} />
+  </>
   );
 }
 
