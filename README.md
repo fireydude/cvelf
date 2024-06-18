@@ -10,3 +10,10 @@ A web application for customising your CV to specific jobs.
 3. View all your CVs in a list and compare them to each other.  You will be able to see the changes which have been made in order to customise a CV to a specific role.
 
 CV master will allow you to maintain a list of CVs for every possible situation.
+
+## Further work
+ - Download CV as .docx file
+ - Dockerize the project
+ - Host the website
+ - Create a landing page with instructions about 'How it works', update favicon
+ - Use AI ChatGPT API to rewrite work experience descriptions

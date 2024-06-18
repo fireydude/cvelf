@@ -26,7 +26,30 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+      "no-extra-semi": "error",
+      "eqeqeq": "error",
+      "semi": "error",
+      "comma-dangle": [
+        "error",
+        {
+          "arrays": "always-multiline",
+          "objects": "always-multiline",
+          "imports": "always-multiline",
+          "exports": "always-multiline",
+          "functions": "never"
+        }
+      ],
+      "max-len": [
+        "error",
+        {
+          "code": 160
+        }
+      ]
+    }
   },
   "browserslist": {
     "production": [
