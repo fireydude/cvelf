@@ -114,12 +114,25 @@ function App() {
   const addEducation = () => {
     if (educations) {
       const defaultEd = {
-        establishment: '',
-        qualification: '',
+        establishment: 'establishment',
+        qualification: 'qualification',
         year: new Date().getFullYear(),
-        areas: [ '1' ],
+        areas: [ 'subject 1' ],
       } as Education;
       setEducations([...educations, defaultEd]);
+    }
+  };
+  const removeEducation = (i: number) => {
+    if (educations) {
+      const copy = [ ...educations.filter(x => x !== educations[i]) ];
+      setEducations(copy);
+    }
+  };
+  const updateEducation = (val: Education, i: number) => {
+    if (educations) {
+      const copy = [ ...educations ];
+      copy[i] = val;
+      setEducations(copy);
     }
   };
   const addEducationSubject = (i: number) => {
@@ -236,6 +249,8 @@ function App() {
       <EducationTraining
         educations={educations}
         addEducation={addEducation}
+        removeEducation={removeEducation}
+        updateEducation={updateEducation}
         addSubject={addEducationSubject}
         removeSubject={removeEducationSubject}
          />
