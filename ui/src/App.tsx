@@ -189,6 +189,20 @@ function App() {
     }
   };
 
+  const handleDownload = () => {
+    const pdfWindow = window.open();
+    fetch("http://localhost:5264/doc",
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/file" },
+        // body: data
+      }).then(response => response.blob()).then(blob => {
+        if (pdfWindow) {
+          pdfWindow.location = window.URL.createObjectURL(blob);
+        }
+      });
+  };
+
   return (<>
     <div className="Container">
       <h1>Brian Herbert</h1>
@@ -217,6 +231,7 @@ function App() {
       />
     </div>
     <PersistToolbar setCvJsonData={setCvJsonData} handleSave={handleSave} />
+    <button onClick={handleDownload} >Download .docx</button>
   </>
   );
 }

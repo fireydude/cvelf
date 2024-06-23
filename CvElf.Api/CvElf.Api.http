@@ -1,0 +1,6 @@
+@CvElf.Api_HostAddress = http://localhost:5264
+
+GET {{CvElf.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
