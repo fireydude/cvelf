@@ -50,12 +50,19 @@ app.MapGet("/weatherforecast", () =>
 app.MapGet("/doc", () =>
 {
     var builder = new CvBuilder();
-    var data = builder.Build();
+    var data = builder.Build("fixed");
     Results.File(data, "", fileDownloadName: "test-cv.docx");
     return Results.File(data, "application/file", "test.docx");
 })
 .WithName("GetCv")
 .WithOpenApi();
+
+app.MapPost("/doc", (CV body) => {
+    var builder = new CvBuilder();
+    var data = builder.Build(body.Name);
+    Results.File(data, "pdf", fileDownloadName: "test-cv.docx");
+    return Results.File(data, "application/file", "test.docx");
+});
 
 app.Run();
 
@@ -63,3 +70,5 @@ record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
+
+record CV(string Name);

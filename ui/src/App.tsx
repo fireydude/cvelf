@@ -190,11 +190,12 @@ function App() {
   };
 
   const handleDownload = () => {
+    const body = { name: 'John Smith' };
     fetch("http://localhost:5264/doc",
       {
-        method: "GET",
-        headers: { "Content-Type": "application/file" },
-        // body: data
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
       }).then(response => response.blob()).then(blob => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');

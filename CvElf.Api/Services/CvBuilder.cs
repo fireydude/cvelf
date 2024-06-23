@@ -6,33 +6,33 @@ namespace CvElf.Api.Services;
 
 public class CvBuilder
 {
-    public byte[] Build()
+    static TableRow GetSummaryRow(string key, string value)
     {
-        static TableRow GetSummaryRow(string key, string value)
+        var row = new TableRow();
+        var cellKey = new TableCell();
+        cellKey.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Dxa, Width = "2400" }));
+        var keyPara = new Paragraph(new Run(new Text(key)));
+        keyPara.PrependChild(new ParagraphProperties
         {
-            var row = new TableRow();
-            var cellKey = new TableCell();
-            cellKey.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Dxa, Width = "2400" }));
-            var keyPara = new Paragraph(new Run(new Text(key)));
-            keyPara.PrependChild(new ParagraphProperties
-            {
-                ParagraphStyleId = new ParagraphStyleId { Val = CvStyles.BodyBoldStyleId },
-            });
-            cellKey.Append(keyPara);
-            row.Append(cellKey);
+            ParagraphStyleId = new ParagraphStyleId { Val = CvStyles.BodyBoldStyleId },
+        });
+        cellKey.Append(keyPara);
+        row.Append(cellKey);
 
-            var cellValue = new TableCell();
-            cellValue.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Dxa, Width = "2400" }));
-            var cellPara = new Paragraph(new Run(new Text(value)));
-            cellPara.PrependChild(new ParagraphProperties
-            {
-                ParagraphStyleId = new ParagraphStyleId { Val = CvStyles.BodyStyleId },
-            });
-            cellValue.Append(cellPara);
-            row.Append(cellValue);
-            return row;
-        }
+        var cellValue = new TableCell();
+        cellValue.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Dxa, Width = "2400" }));
+        var cellPara = new Paragraph(new Run(new Text(value)));
+        cellPara.PrependChild(new ParagraphProperties
+        {
+            ParagraphStyleId = new ParagraphStyleId { Val = CvStyles.BodyStyleId },
+        });
+        cellValue.Append(cellPara);
+        row.Append(cellValue);
+        return row;
+    }
 
+    public byte[] Build(string name)
+    {
         var stream = new MemoryStream();
         using (var document = WordprocessingDocument.Create(stream, WordprocessingDocumentType.Document))
         {
@@ -49,12 +49,11 @@ public class CvBuilder
             styleDefinitionsPart.Styles.Append(CvStyles.GetBody());
             styleDefinitionsPart.Styles.Append(CvStyles.GetBodyBold());
             styleDefinitionsPart.Styles.Append(CvStyles.GetBodySmall());
-
-            var title = new Paragraph(new Run(new Text("Brian Herbert")));
+            
+            var title = new Paragraph(new Run(new Text(name)));
             var titleProps = new ParagraphProperties();
             titleProps.ParagraphStyleId = new ParagraphStyleId { Val = CvStyles.H1StyleId };
             title.PrependChild(titleProps);
-
 
             body.AddChild(title);
             body.AppendChild(HorizontalLine.GetHorizontalLine());
@@ -281,12 +280,12 @@ public class CvBuilder
             {
                 ParagraphStyleId = new ParagraphStyleId { Val = CvStyles.BodySmallStyleId }
             });
-            var name = new Run(new Text("Loughborough University"));
-            name.PrependChild(new RunProperties
+            var institution = new Run(new Text("Loughborough University"));
+            institution.PrependChild(new RunProperties
             {
                 Bold = new Bold { Val = new OnOffValue(true) }
             });
-            loughborough.Append(name);
+            loughborough.Append(institution);
             loughborough.Append(new Run(new Text { Text = "\t2004", Space = SpaceProcessingModeValues.Preserve }));
             loughborough.Append(new Break() { Type = BreakValues.TextWrapping });
             loughborough.Append(new Run(new Text("Subject areas")));
