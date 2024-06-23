@@ -190,16 +190,20 @@ function App() {
   };
 
   const handleDownload = () => {
-    const pdfWindow = window.open();
     fetch("http://localhost:5264/doc",
       {
         method: "GET",
         headers: { "Content-Type": "application/file" },
         // body: data
       }).then(response => response.blob()).then(blob => {
-        if (pdfWindow) {
-          pdfWindow.location = window.URL.createObjectURL(blob);
-        }
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.setAttribute('download', 'cv.docx');
+        a.href = url;
+        a.download = 'cv.docx';
+        document.body.appendChild(a);
+        a.click();
       });
   };
 
@@ -231,7 +235,9 @@ function App() {
       />
     </div>
     <PersistToolbar setCvJsonData={setCvJsonData} handleSave={handleSave} />
-    <button onClick={handleDownload} >Download .docx</button>
+    <div style={{ margin: 'auto', width: '50%', padding: '10px' }}>
+      <button style={{ width: '100%', padding: 10, fontSize: 20 }} onClick={handleDownload} >Download .docx</button>
+    </div>
   </>
   );
 }
