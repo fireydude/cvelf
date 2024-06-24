@@ -1,0 +1,10 @@
+services:
+  cv-elf-ui:
+   image: cv-elf
+   ports: 
+    - 3000:3000
+
+  cv-elf-api:
+    image: cv-api
+    ports:
+     - 3001:8080
