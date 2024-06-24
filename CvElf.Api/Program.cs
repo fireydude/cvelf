@@ -17,8 +17,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
 // global cors policy
 app.UseCors(x => x
     .AllowAnyMethod()
