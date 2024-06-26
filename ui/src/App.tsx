@@ -191,7 +191,7 @@ function App() {
 
   const handleDownload = () => {
     const body = { name: 'John Smith' };
-    fetch("http://localhost:3001/doc",
+    fetch("https://cvelf.co.uk/api/doc",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

@@ -20,7 +20,7 @@ CV master will allow you to maintain a list of CVs for every possible situation.
 
  ## UI Deployment
  1. Build docker image for x64 linux `docker build . -t cv-elf:linux --platform linux/amd64` from route folder `cv-master``
- 2. Login to azure CLI with container registry `az login --name cvelf``
+ 2. Login to azure CLI with container registry `az acr login --name cvelf``
  3. Tag docker image with ACR name `docker tag cv-elf:linux cvelf.azurecr.io/cv-elf:linux`
 
 To test the the container locally use `docker run -p 3001:3000 -it --rm cv-elf:latest`where cv-elf:latest has been build with the `--platform` option.
