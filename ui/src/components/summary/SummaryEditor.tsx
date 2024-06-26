@@ -42,16 +42,11 @@ export const SummaryEditor: React.FC<ISummaryEditor> = (props) => {
         </dl>
         <AddItem addText="Add Summary Row" add={addItem} />
         <br />
-        {!updateText &&
-          <div onClick={() => setUpdateText(true)} style={{ fontSize: 20, margin: 30 }}>
-            {summary.summary}
-          </div>
-        }
-        {updateText &&
+        <div onClick={() => setUpdateText(true)} style={{ fontSize: 20, margin: 30 }}>
           <FocusText val={summary.summary} textArea hasFocus={updateText}
             onChange={(val) => updateSummaryText(val)}
             onBlur={() => setUpdateText(false)} placeholder="summary description" />
-        }
+        </div>
       </CvSection>
     </CvArticle>
   );

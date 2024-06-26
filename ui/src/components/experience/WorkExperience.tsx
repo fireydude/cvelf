@@ -81,7 +81,8 @@ export const WorkExperience: React.FC<IWorkExperience> = (props) => {
             placeholder="description"
             hasFocus={updateDesc === index}
             onChange={(v: string) => updateExperience({ ...val, description: v }, index)}
-            onBlur={() => setUpdateDesc(undefined)} />
+            onBlur={() => setUpdateDesc(undefined)}
+            textArea />
         </div>
       </CvSection>
     ))}

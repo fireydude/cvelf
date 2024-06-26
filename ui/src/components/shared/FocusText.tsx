@@ -18,7 +18,18 @@ export const FocusText: React.FC<IFocusText> = (props) => {
     }
   }, [hasFocus]);
   return (<>
-    {!hasFocus && <span>{val ?? placeholder}</span>}
+    {!hasFocus &&
+      <div style={{
+        border: 'solid 1px rgba(100, 100, 100, 0.2)',
+        borderRadius: 5,
+        padding: 2,
+        paddingLeft: 5,
+        paddingRight: 5,
+        display: 'inline-block',
+        cursor: 'pointer',
+      }}>
+        {val ?? placeholder}
+      </div>}
     {hasFocus && !textArea &&
       <input ref={ref} type='text' value={val} style={{ width: 300 }} onChange={(e) => onChange(e.currentTarget.value)} onBlur={onBlur} />
     }

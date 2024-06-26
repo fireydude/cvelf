@@ -71,7 +71,7 @@ export const EducationTraining: React.FC<IEducationTraining> = (props) => {
     </CvSection>))}
     <div style={{ marginTop: 50, marginLeft: 20 }}>
       <button onClick={() => addEducation()}>
-        Add Experience
+        Add Education or training
       </button>
     </div>
   </CvArticle>);

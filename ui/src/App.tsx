@@ -10,8 +10,11 @@ import { Skills } from './model/KeySkills';
 import { Education } from './model/Education';
 import { CV } from './model/CV';
 import { PersistToolbar } from './components/persist-menu/PersistToolbar';
+import { FocusText } from './components/shared/FocusText';
 
 function App() {
+  const [name, setName] = useState<string>("John Smith");
+  const [updateName, setUdateName] = useState<boolean>(false);
   const [summary, setSummary] = useState<Summary>({
     items: [
       { name: 'Home Location', value: 'Lymm, Cheshire' },
@@ -160,6 +163,7 @@ function App() {
 
   function handleSave() {
     window.localStorage.setItem('cv', JSON.stringify({
+      name,
       summary,
       keySkills,
       experiences,
@@ -190,7 +194,7 @@ function App() {
   };
 
   const handleDownload = () => {
-    const body = { name: 'John Smith' };
+    const body = { name };
     fetch("https://cvelf.co.uk/api/doc",
       {
         method: "POST",
@@ -210,7 +214,14 @@ function App() {
 
   return (<>
     <div className="Container">
-      <h1>Brian Herbert</h1>
+      <h1 onClick={() => setUdateName(true)}>
+        <FocusText 
+          val={name} 
+          placeholder='name' 
+          hasFocus={updateName} 
+          onChange={(v) => setName(v)}
+          onBlur={() => setUdateName(false)} />
+      </h1>
       <SummaryEditor
         summary={summary}
         updateSummaryText={updateSummaryText}

@@ -17,6 +17,7 @@ export interface CvState {
 
 export const cv: CvState = {
   data: {
+    name: 'Bob Jones',
     summary: {
       items: [
         { name: 'Home Location', value: 'Lymm, Cheshire' },
