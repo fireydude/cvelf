@@ -37,6 +37,7 @@ function App() {
       description: 'Brian worked on two projects both of which related to Army training courses.',
     },
   ]);
+  const [downloading, setDownloading] = useState<boolean>(false);
 
   const addSkill = (level: 'excellent' | 'good' | 'average', name: string) => {
     setSkills({
@@ -201,6 +202,7 @@ function App() {
 
   const handleDownload = () => {
     const body = { name };
+    setDownloading(true);
     fetch("https://cvelf.co.uk/api/doc",
       {
         method: "POST",
@@ -215,6 +217,8 @@ function App() {
         a.download = 'cv.docx';
         document.body.appendChild(a);
         a.click();
+      }).finally(() => {
+        setDownloading(false);
       });
   };
 
@@ -255,7 +259,7 @@ function App() {
     </div>
     <PersistToolbar setCvJsonData={setCvJsonData} handleSave={handleSave} />
     <div style={{ margin: 'auto', width: '50%', padding: '10px' }}>
-      <button style={{ width: '100%', padding: 10, fontSize: 20 }} onClick={handleDownload} >Download .docx</button>
+      <button style={{ width: '100%', padding: 10, fontSize: 20 }} onClick={handleDownload} disabled={downloading}>Download .docx</button>
     </div>
   </>
   );
