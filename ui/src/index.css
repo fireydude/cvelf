@@ -29,3 +29,7 @@ dd {
   grid-column-start: 2;
   padding: 10px;
 }
+
+button {
+  cursor: pointer;
+}

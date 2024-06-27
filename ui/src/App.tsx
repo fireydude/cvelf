@@ -55,12 +55,18 @@ function App() {
       return;
     }
     setExperiences([
-      ...experiences,
       {
         startDate: new Date(),
         endDate: new Date(),
       },
+      ...experiences,
     ]);
+  };
+  const removeExperience = (index: number) => {
+    if (!experiences) {
+      return;
+    }
+    setExperiences([...experiences.filter(x => x !== experiences[index])]);
   };
   const updateExperience = (item: Experience, index: number) => {
     if (!experiences) {
@@ -122,7 +128,7 @@ function App() {
         year: new Date().getFullYear(),
         areas: ['subject 1'],
       } as Education;
-      setEducations([...educations, defaultEd]);
+      setEducations([ defaultEd, ...educations ]);
     }
   };
   const removeEducation = (i: number) => {
@@ -235,6 +241,7 @@ function App() {
       <WorkExperience
         experiences={experiences}
         addExperience={addExperience}
+        removeExperience={removeExperience}
         updateExperience={updateExperience}
       />
       <EducationTraining

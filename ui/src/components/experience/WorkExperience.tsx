@@ -7,11 +7,12 @@ import { CvArticle } from "../shared/CvArticle";
 interface IWorkExperience {
   experiences: Experience[];
   addExperience: () => void;
+  removeExperience: (index: number) => void;
   updateExperience: (val: Experience, index: number) => void;
 }
 
 export const WorkExperience: React.FC<IWorkExperience> = (props) => {
-  const { experiences, addExperience, updateExperience } = props;
+  const { experiences, addExperience, removeExperience, updateExperience } = props;
 
   const [updateTitle, setUpdateTitle] = useState<number>();
   const [updateOrg, setUpdateOrg] = useState<number>();
@@ -43,11 +44,17 @@ export const WorkExperience: React.FC<IWorkExperience> = (props) => {
 
   return (<CvArticle>
     <h2>Employment History</h2>
+    <div style={{ marginTop: 50, marginLeft: 20 }}>
+      <button onClick={() => addExperience()}>
+        Add Experience
+      </button>
+    </div>
     <div onDragOver={handleListDragOver}>
       {experiences && experiences.map((val, index) => (
-        <div key={index} data-id={index} draggable onDragStart={handleItemDragStart} onDragEnd={handleItemDragEnd} id='div'>
+        <div key={index} data-id={index} draggable onDragStart={handleItemDragStart} onDragEnd={handleItemDragEnd}>
+          <button style={{ float: 'right' }} onClick={() => removeExperience(index)}>Delete</button>
           <CvSection dragId={index + ''} style={{
-            display: 'grid',
+            display: 'grid-inline',
             gridTemplateAreas: `'title title title'
         'organisation location date'
         'desc desc desc`,
@@ -113,11 +120,6 @@ export const WorkExperience: React.FC<IWorkExperience> = (props) => {
           </CvSection>
         </div>
       ))}
-    </div>
-    <div style={{ marginTop: 50, marginLeft: 20 }}>
-      <button onClick={() => addExperience()}>
-        Add Experience
-      </button>
     </div>
   </CvArticle>);
 };
