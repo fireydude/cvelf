@@ -3,6 +3,7 @@ import { AddItem } from "../shared/AddItem";
 import { Skills } from "../../model/KeySkills";
 import { CvSection } from "../shared/CvSection";
 import { CvArticle } from "../shared/CvArticle";
+import { SkillList } from "./SkillList";
 
 interface IKeySkills {
   keySkills: Skills;
@@ -24,23 +25,17 @@ export const KeySkills: React.FC<IKeySkills> = (props) => {
       }}>
         <div style={{ gridArea: 'excellent' }}>
           <h3>Excellent</h3>
-          {keySkills.excellent.map((skill, index) => {
-            return (<p key={index}>{skill}<button onClick={() => removeSkill('excellent', skill)}>Delete</button></p>);
-          })}
+          <SkillList items={keySkills.excellent} remove={(x: string) => removeSkill('excellent', x)} />
           <AddItem addText="Add Excellent Skill" add={(name) => addSkill('excellent', name)} />
         </div>
         <div style={{ gridArea: 'good' }}>
           <h3>Good</h3>
-          {keySkills.good.map((skill, index) => {
-            return (<p key={index}>{skill}<button onClick={() => removeSkill('good', skill)}>Delete</button></p>);
-          })}
+          <SkillList items={keySkills.good} remove={(x: string) => removeSkill('good', x)} />
           <AddItem addText="Add Good Skill" add={(name) => addSkill('good', name)} />
         </div>
         <div style={{ gridArea: 'average' }}>
           <h3>Average</h3>
-          {keySkills.average.map((skill, index) => {
-            return (<p key={index}>{skill}<button onClick={() => removeSkill('average', skill)}>Delete</button></p>);
-          })}
+          <SkillList items={keySkills.average} remove={(x: string) => removeSkill('average', x)} />
           <AddItem addText="Add Average Skill" add={(name) => addSkill('average', name)} />
         </div>
       </CvSection>
