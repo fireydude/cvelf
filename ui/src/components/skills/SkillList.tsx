@@ -20,7 +20,7 @@ export const SkillList: React.FC<I> = ({ items, remove }) => {
   function handleListDragOver(e: React.DragEvent<HTMLDivElement>): void {
     e.preventDefault();
     const id = Number((e.target as any).dataset.id);
-    if (id === undefined || isNaN(id)|| dragIndex === undefined || id === undefined || dragIndex === id) {
+    if (id === undefined || isNaN(id) || dragIndex === undefined || id === undefined || dragIndex === id) {
       return;
     }
     const to = id;
@@ -34,9 +34,15 @@ export const SkillList: React.FC<I> = ({ items, remove }) => {
       {items.map((skill, index) => {
         return (
           <p key={index} draggable data-id={index} onDragStart={handleItemDragStart} onDragEnd={handleItemDragEnd}
-            style={{ color: index === dragIndex ? '#555' : undefined, cursor: items.length > 1 ? 'move' : undefined }}>
+            style={
+              {
+                color: index === dragIndex ? '#555' : undefined,
+                cursor: items.length > 1 ? 'move' : undefined,
+                border: 'dashed 1px #aaa',
+                padding: 5,
+              }}>
             {skill}
-            <button onClick={() => remove(skill)}>Delete</button>
+            <button style={{ float: 'right', margin: 0, height: 20 }} onClick={() => remove(skill)}>Delete</button>
           </p>);
       })}
     </div>);

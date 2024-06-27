@@ -23,18 +23,18 @@ export const KeySkills: React.FC<IKeySkills> = (props) => {
         gap: 5,
         gridTemplateColumns: '33% 33% 33%',
       }}>
-        <div style={{ gridArea: 'excellent' }}>
-          <h3>Excellent</h3>
+        <div style={{ gridArea: 'excellent', paddingRight: 20 }}>
+          <h3 style={{ paddingLeft: 5 }}>Excellent</h3>
           <SkillList items={keySkills.excellent} remove={(x: string) => removeSkill('excellent', x)} />
           <AddItem addText="Add Excellent Skill" add={(name) => addSkill('excellent', name)} />
         </div>
-        <div style={{ gridArea: 'good' }}>
-          <h3>Good</h3>
+        <div style={{ gridArea: 'good', paddingRight: 20 }}>
+          <h3 style={{ paddingLeft: 5 }}>Good</h3>
           <SkillList items={keySkills.good} remove={(x: string) => removeSkill('good', x)} />
           <AddItem addText="Add Good Skill" add={(name) => addSkill('good', name)} />
         </div>
-        <div style={{ gridArea: 'average' }}>
-          <h3>Average</h3>
+        <div style={{ gridArea: 'average', paddingRight: 20 }}>
+          <h3 style={{ paddingLeft: 5 }}>Average</h3>
           <SkillList items={keySkills.average} remove={(x: string) => removeSkill('average', x)} />
           <AddItem addText="Add Average Skill" add={(name) => addSkill('average', name)} />
         </div>
