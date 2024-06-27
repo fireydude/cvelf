@@ -7,10 +7,11 @@ interface IFocusText {
   onChange: (val: string) => void;
   onBlur: () => void;
   textArea?: boolean;
+  focusWidth?: number;
 }
 
 export const FocusText: React.FC<IFocusText> = (props) => {
-  const { val, placeholder, hasFocus, onChange, onBlur, textArea } = props;
+  const { val, placeholder, hasFocus, onChange, onBlur, textArea, focusWidth } = props;
   const ref = useRef(null);
   useEffect(() => {
     if (hasFocus && ref.current) {
@@ -31,7 +32,7 @@ export const FocusText: React.FC<IFocusText> = (props) => {
         {val ?? placeholder}
       </div>}
     {hasFocus && !textArea &&
-      <input ref={ref} type='text' value={val} style={{ width: 300 }} onChange={(e) => onChange(e.currentTarget.value)} onBlur={onBlur} />
+      <input ref={ref} type='text' value={val} style={{ width: focusWidth ?? 300 }} onChange={(e) => onChange(e.currentTarget.value)} onBlur={onBlur} />
     }
     {hasFocus && textArea &&
       <textarea ref={ref} rows={3} cols={100} value={val}

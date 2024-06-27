@@ -53,15 +53,11 @@ export const WorkExperience: React.FC<IWorkExperience> = (props) => {
       {experiences && experiences.map((val, index) => (
         <div key={index} data-id={index} draggable onDragStart={handleItemDragStart} onDragEnd={handleItemDragEnd}>
           <button style={{ float: 'right' }} onClick={() => removeExperience(index)}>Delete</button>
-          <CvSection dragId={index + ''} style={{
-            display: 'grid-inline',
-            gridTemplateAreas: `'title title title'
-        'organisation location date'
-        'desc desc desc`,
-            alignContent: 'left',
-            gap: 5,
+          <CvSection dragId={index + ''} 
+          style={{
             cursor: 'move',
-          }}>
+          }}
+          >
             <h3
               style={{ gridArea: 'title', textAlign: 'left', color: val.title ? undefined : '#888' }}
               onClick={() => updateTitle === undefined && setUpdateTitle(index)}
@@ -71,23 +67,28 @@ export const WorkExperience: React.FC<IWorkExperience> = (props) => {
                 placeholder='title'
                 hasFocus={updateTitle === index}
                 onChange={(v: string) => updateExperience({ ...val, title: v }, index)}
-                onBlur={() => setUpdateTitle(undefined)} />
+                onBlur={() => setUpdateTitle(undefined)}
+                focusWidth={500} />
             </h3>
-            <div style={{ gridArea: 'organisation', fontWeight: 'bold', textAlign: 'left' }} onClick={() => updateOrg === undefined && setUpdateOrg(index)}>
+            <div style={{ fontWeight: 'bold', display: 'inline-block', width: 420 }} 
+              onClick={() => updateOrg === undefined && setUpdateOrg(index)}>
               <FocusText val={val.organisation}
                 placeholder='organisation'
                 hasFocus={updateOrg === index}
                 onChange={(v: string) => updateExperience({ ...val, organisation: v }, index)}
-                onBlur={() => setUpdateOrg(undefined)} />
+                onBlur={() => setUpdateOrg(undefined)}
+                focusWidth={400} />
             </div>
-            <div style={{ gridArea: 'location', textAlign: 'left' }} onClick={() => updateLocation === undefined && setUpdateLocation(index)}>
+            <div style={{ display: 'inline-block', width: 200 }} 
+              onClick={() => updateLocation === undefined && setUpdateLocation(index)}>
               <FocusText val={val.location}
                 placeholder='location'
                 hasFocus={updateLocation === index}
                 onChange={(v: string) => updateExperience({ ...val, location: v }, index)}
-                onBlur={() => setUpdateLocation(undefined)} />
+                onBlur={() => setUpdateLocation(undefined)}
+                focusWidth={160} />
             </div>
-            <div style={{ gridArea: 'date', textAlign: 'left' }}>
+            <div style={{ display: 'inline-block' } as any}>
               <label htmlFor="startExperience">Start:</label>
               <input type="date" id="startExperience" name="startExperience"
                 value={val.startDate.toISOString().split('T')[0]}
@@ -98,7 +99,7 @@ export const WorkExperience: React.FC<IWorkExperience> = (props) => {
                   }
                 }}
               />
-              <label htmlFor="endExperience">End:</label>
+              <label htmlFor="endExperience" style={{ paddingLeft: 15 }}>End:</label>
               <input type="date" id="endExperience" name="endExperience"
                 value={val.endDate.toISOString().split('T')[0]}
                 onChange={(e) => {
@@ -109,7 +110,7 @@ export const WorkExperience: React.FC<IWorkExperience> = (props) => {
                 }}
               />
             </div>
-            <div style={{ gridArea: 'desc', textAlign: 'left' }} onClick={() => updateLocation === undefined && setUpdateDesc(index)}>
+            <div style={{ marginTop: 2 }} onClick={() => updateLocation === undefined && setUpdateDesc(index)}>
               <FocusText val={val.description}
                 placeholder="description"
                 hasFocus={updateDesc === index}

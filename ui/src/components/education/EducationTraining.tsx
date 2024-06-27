@@ -69,7 +69,8 @@ export const EducationTraining: React.FC<IEducationTraining> = (props) => {
                 onChange={(v: string) => updateEducation({ ...e, establishment: v }, i)}
                 onBlur={() => setUpdateEstablishment(undefined)} />
             </h3>
-            <span style={{ fontWeight: 'bold' }} onClick={() => updateQualification === undefined && setUpdateQualification(i)}>
+            <span style={{ fontWeight: 'bold', display: 'inline-block', width: 500 }} 
+              onClick={() => updateQualification === undefined && setUpdateQualification(i)}>
               <FocusText
                 val={e.qualification}
                 placeholder='qualification'
