@@ -19,27 +19,30 @@ export const SummaryEditor: React.FC<ISummaryEditor> = (props) => {
 
   const [updateText, setUpdateText] = useState<boolean>(false);
 
+  const colStyle = { display: 'inline-block', padding: 10 };
   return (
     <CvArticle>
       <h2>Summary</h2>
       <CvSection>
-        <dl>
+        <div>
           {summary.items.map((item, index) => {
             return (
-              <React.Fragment key={index}>
-                <dt>
+              <div key={index} draggable style={{ cursor: 'move' }}>
+                <div style={{ ...colStyle, width: 300, textAlign: 'right', fontWeight: 'bold' }}>
                   {item.name}
-                </dt>
-                <dd>
+                </div>
+                <div style={colStyle}>
                   <input type='text' value={item.value} style={{ width: 300 }}
                     onChange={(e) => updateItem(item, e.currentTarget.value)}
                   />
+                </div>
+                <div style={colStyle}>
                   <button onClick={() => deleteItem(item.name)}>Delete</button>
-                </dd>
-              </React.Fragment>
+                </div>
+              </div>
             );
           })}
-        </dl>
+        </div>
         <AddItem addText="Add Summary Row" add={addItem} />
         <br />
         <div onClick={() => setUpdateText(true)} style={{ fontSize: 20, margin: 30 }}>
