@@ -1,11 +1,12 @@
 interface IStyledSection {
+  dragId?: string;
   children: any;
   style?: React.CSSProperties;
 }
 
 export const CvSection: React.FC<IStyledSection> = (props) => {
-  const { children, style } = props;
-  return (<section style={{
+  const { dragId, children, style } = props;
+  return (<section data-id={dragId} style={{
     ...style,
     border: 'solid 1px',
     borderRadius: 5,
