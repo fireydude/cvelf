@@ -70,7 +70,7 @@ export const SummaryEditor: React.FC<ISummaryEditor> = (props) => {
         <AddItem addText="Add Summary Row" add={addItem} />
         <br />
         <div onClick={() => setUpdateText(true)} style={{ fontSize: 20, margin: 30 }}>
-          <FocusText val={summary.summary} textArea hasFocus={updateText}
+          <FocusText val={summary.summaryDesc} textArea hasFocus={updateText}
             onChange={(val) => updateSummaryText(val)}
             onBlur={() => setUpdateText(false)} placeholder="summary description" />
         </div>

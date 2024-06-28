@@ -6,5 +6,5 @@ export interface SummaryItem {
 
 export interface Summary {
   items: SummaryItem[];
-  summary: string;
+  summaryDesc: string;
 }

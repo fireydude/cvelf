@@ -20,7 +20,7 @@ function App() {
       { name: 'Home Location', value: 'Lymm, Cheshire' },
       { name: 'Telephone (mobile)', value: '+44 7780602687' },
     ],
-    summary: 'experienced developer',
+    summaryDesc: 'experienced developer',
   });
   const [keySkills, setSkills] = useState<Skills>({
     excellent: ['Outlook'],
@@ -109,7 +109,7 @@ function App() {
   const updateSummaryText = (val: string) => {
     setSummary({
       ...summary,
-      summary: val,
+      summaryDesc: val,
     });
   };
 
@@ -201,7 +201,7 @@ function App() {
   };
 
   const handleDownload = () => {
-    const body = { name };
+    const body: CV = { name, summary, keySkills, experiences, educations };
     setDownloading(true);
     fetch("https://cvelf.co.uk/api/doc",
       {

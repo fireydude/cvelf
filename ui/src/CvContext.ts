@@ -23,7 +23,7 @@ export const cv: CvState = {
         { name: 'Home Location', value: 'Lymm, Cheshire' },
         { name: 'Telephone (mobile)', value: '+44 7780602687' },
       ],
-      summary: 'experienced developer',
+      summaryDesc: 'experienced developer',
     },
     keySkills: {
       excellent: ['Outlook'],
