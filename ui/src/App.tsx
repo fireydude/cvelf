@@ -180,8 +180,8 @@ function App() {
 
   const setCvJsonData = (cvData: string) => {
     const saved = JSON.parse(cvData) as CV;
-    if (saved?.summary) {
-      setSummary(saved.summary);
+    if (saved?.name) {
+      setName(saved.name);
     }
     if (saved?.keySkills) {
       setSkills(saved.keySkills);
