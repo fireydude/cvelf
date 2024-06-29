@@ -31,3 +31,9 @@ To test the the container locally use `docker run -p 3001:3000 -it --rm cv-elf:l
 3. `docker push cvelf.azurecr.io/cv-api:linux`
 
 Run locally `docker run -p 3001:8080 -it --rm cv-api`
+
+## Branding
+Potential product names
+- Speedy CV, not used by anyone else domains are available
+- Quick CV, not used by some domains are not available
+- CV Elf, there is already a CV service call 'The CV Elf' which exists on twitter
