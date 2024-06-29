@@ -200,10 +200,11 @@ function App() {
     }
   };
 
+  const backendUrl = process.env.REACT_APP_BACKEND_URL ?? "https://cvelf.co.uk/api";
   const handleDownload = () => {
     const body: CV = { name, summary, keySkills, experiences, educations };
     setDownloading(true);
-    fetch("https://cvelf.co.uk/api/doc",
+    fetch(backendUrl + "/doc",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
